@@ -512,7 +512,7 @@ Example:
 
 ---
 
-### 19. Governance Intent
+### 19. Governance and Future Evolution
 
 These principles are intended to prevent schema drift and preserve coherence across the OpenUDA ecosystem.
 
@@ -532,5 +532,6 @@ All future OpenUDA specifications SHOULD align with these principles unless a do
 ---
 
 ### 20. Change Log
-Version	Date	Notes
-1.0	2026-03-07	Initial draft
+| Version | Date | Notes |
+|--------|------|------|
+| 1.0 | 2026-03-07 | Initial draft |
