@@ -266,6 +266,24 @@ Preferred pattern:
 ```
 This pattern improves readability, validation, and future machine processing.
 
+### 10.5 Extension Optionality Principle
+
+Extensions SHOULD remain optional wherever possible.
+
+Extensions MUST NOT introduce mandatory fields that prevent a document from being processed using only the core UDT structure unless the requirement is defined by an explicitly published extension profile.
+
+An extension profile MAY define additional required fields for a specific ecosystem, such as:
+
+- a country regulatory profile
+- an industry interoperability profile
+- a bilateral trading agreement
+
+However, such requirements MUST be declared within the extension profile itself and MUST NOT alter the conformance requirements of the base UDT specification.
+
+Implementations that do not support a given extension profile SHOULD still be able to process the core UDT document.
+
+This rule preserves interoperability across OpenUDA implementations while allowing ecosystems to evolve specialized requirements.
+
 ---
 
 ### 11. Custom Data
