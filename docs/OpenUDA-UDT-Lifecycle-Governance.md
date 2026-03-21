@@ -1,15 +1,15 @@
-# OpenUDA UDT Lifecycle Governance
+# OpenUDA UD Lifecycle Governance
 
 **Status:** Draft  
-**Applies to:** All OpenUDA Universal Document Types (UDTs)  
+**Applies to:** All OpenUDA Universal Documents (UDs)  
 
 ---
 
 # 1. Purpose
 
-This document defines the governance process for the lifecycle of OpenUDA Universal Document Types (UDTs).
+This document defines the governance process for the lifecycle of OpenUDA Universal Documents (UDs).
 
-The goal of this process is to ensure that new document types and revisions are introduced in a controlled manner that preserves:
+The goal of this process is to ensure that new documents and revisions are introduced in a controlled manner that preserves:
 
 - interoperability
 - stability
@@ -20,28 +20,26 @@ This governance model allows OpenUDA to evolve while preventing uncontrolled sch
 
 ---
 
-# 2. UDT Lifecycle Overview
+# 2. UD Lifecycle Overview
 
-Each Universal Document Type progresses through the following lifecycle stages:
-
+Each Universal Document progresses through the following lifecycle stages:
 
 Proposal → Draft → Review → Approved → Published → Deprecated → Retired
 
-
-These stages ensure that new document types are properly evaluated before becoming part of the OpenUDA specification family.
+These stages ensure that new documents are properly evaluated before becoming part of the OpenUDA specification family.
 
 ---
 
 # 3. Proposal Stage
 
-A new UDT begins with a proposal.
+A new UD begins with a proposal.
 
 A proposal SHOULD include:
 
 - the proposed document name
 - the business purpose of the document
 - industries or ecosystems that require the document
-- justification for why the document cannot be represented by an existing UDT
+- justification for why the document cannot be represented by an existing UD
 - an initial draft structure
 
 Example proposal topics:
@@ -67,7 +65,7 @@ During this stage:
 - the document structure is defined
 - core fields are identified
 - validation rules are proposed
-- relationships to existing UDTs are evaluated
+- relationships to existing UDs are evaluated
 
 Draft documents SHOULD follow the OpenUDA Canonical Design Principles.
 
@@ -77,7 +75,7 @@ Draft documents are considered experimental and may change significantly.
 
 # 5. Review Stage
 
-During the Review stage, the proposed UDT is evaluated by the OpenUDA community.
+During the Review stage, the proposed UD is evaluated by the OpenUDA community.
 
 Review activities may include:
 
@@ -87,19 +85,29 @@ Review activities may include:
 - validation rule testing
 - industry feedback
 
+Review MUST confirm that:
+
+- the UD defines a clear and minimal canonical core
+- the core structure is stable and reusable across implementations
+- extension points are clearly defined
+- the design does not introduce alternative structural patterns
+
 Major structural issues SHOULD be resolved during this phase.
 
 ---
 
 # 6. Approved Stage
 
-Once a UDT has passed review, it may be marked as Approved.
+Once a UD has passed review, it may be marked as Approved.
 
 Approval indicates that:
 
 - the document structure is stable
 - validation rules are well defined
 - no major design objections remain
+- the canonical core is clearly defined and enforceable
+
+A UD SHOULD NOT be approved unless its core boundaries and extension model are clearly defined.
 
 Approved documents may still undergo minor refinements before publication.
 
@@ -107,26 +115,26 @@ Approved documents may still undergo minor refinements before publication.
 
 # 7. Published Stage
 
-A UDT is considered Published when:
+A UD is considered Published when:
 
 - the specification is finalized
 - the version is assigned
-- the document is placed in the official OpenUDA UDT directory
+- the document is placed in the official OpenUDA UD directory
 
 Example:
 
 
-udt/
-UDT-INV-1.0.md
+ud/
+UD-INV-1.0.md
 
 
-Published UDTs are considered stable and suitable for production implementations.
+Published UDs are considered stable and suitable for production implementations.
 
 ---
 
 # 8. Versioning
 
-Each UDT follows semantic versioning.
+Each UD follows semantic versioning.
 
 ### Major Versions
 
@@ -154,51 +162,63 @@ Minor versions MUST NOT change the meaning of existing fields.
 
 # 9. Deprecation
 
-A UDT may be marked as Deprecated when:
+A UD may be marked as Deprecated when:
 
 - a superior replacement exists
 - the document is no longer widely used
 - the design is found to have fundamental limitations
 
-Deprecated UDTs remain documented for backward compatibility but SHOULD NOT be used for new implementations.
+Deprecated UDs remain documented for backward compatibility but SHOULD NOT be used for new implementations.
 
 ---
 
 # 10. Retirement
 
-A UDT may eventually be retired.
+A UD may eventually be retired.
 
 Retirement occurs when:
 
 - the document is no longer maintained
 - usage has significantly declined
-- a newer document type fully replaces it
+- a newer document fully replaces it
 
-Retired UDTs remain archived for historical reference.
+Retired UDs remain archived for historical reference.
 
 ---
 
 # 11. Relationship to Extension Profiles
 
-UDTs define the **core document structure**.
+UDs define the **core canonical structure and semantics**.
 
 Extension Profiles define:
 
 - country-specific requirements
 - industry-specific fields
 - regulatory additions
+- stricter validation rules
 
-Extension Profiles MUST NOT redefine the meaning of UDT core fields.
+Extension Profiles MUST:
 
-Extension Profiles may introduce additional fields that apply to specific ecosystems.
+- preserve the full core structure of the base UD
+- NOT remove or redefine core fields
+- NOT weaken core validation rules
+
+Extension Profiles MAY:
+
+- require optional core fields
+- introduce additional extension fields
+- define stricter constraints
+
+A document conforming to a profile MUST also conform to the base UD.
 
 ---
 
 # 12. Conformance
 
-An implementation may claim conformance with a UDT if it:
+An implementation may claim conformance with a UD if it:
 
 - supports all required core fields
+- preserves the canonical structure
 - respects the validation rules defined by the specification
 - preserves canonical semantics
 
@@ -208,7 +228,7 @@ Extensions or custom fields do not invalidate conformance unless they violate co
 
 # 13. Governance Model
 
-The OpenUDA project maintains the official UDT specifications through its repository.
+The OpenUDA project maintains the official UD specifications through its repository.
 
 Changes SHOULD occur through:
 
@@ -221,6 +241,7 @@ Governance decisions SHOULD prioritize:
 - interoperability
 - long-term stability
 - minimal complexity
+- preservation of canonical structure
 
 ---
 
@@ -228,29 +249,22 @@ Governance decisions SHOULD prioritize:
 
 The OpenUDA repository organizes specifications as follows:
 
-
+```text
 docs/
-OpenUDA-Canonical-Design-Principles.md
-OpenUDA-Extension-Profile-Specification.md
-OpenUDA-UDT-Lifecycle-Governance.md
+  OpenUDA-Canonical-Design-Principles.md
+  OpenUDA-Extension-Profile-Specification.md
+  OpenUDA-UD-Lifecycle-Governance.md
 
-udt/
-UDT-INV-1.0.md
-UDT-CM-1.0.md
-UDT-PO-1.0.md
+ud/
+  UD-INV-1.0.md
+  UD-CM-1.0.md
+  UD-PO-1.0.md
 
 extensions/
-industry-it.md
-country-ca.md
-country-us.md
-
-
-This structure separates:
-
-- governance documentation
-- document type specifications
-- extension profiles
-
+  industry-it.md
+  country-ca.md
+  country-us.md
+```
 ---
 
 # 15. Change Log
@@ -258,3 +272,4 @@ This structure separates:
 | Version | Date | Notes |
 |--------|------|------|
 | 1.0 | 2026-03-07 | Initial draft |
+| 1.1 | 2026-03-20 | Updated to UD terminology and added core enforcement rules 
