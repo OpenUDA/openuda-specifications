@@ -1,7 +1,7 @@
 # OpenUDA Canonical Design Principles
 
 **Status:** Draft  
-**Applies to:** All OpenUDA Universal Document Types (UDTs)  
+**Applies to:** All OpenUDA Universal Document (UDs)  
 **Canonical Model:** Encoding-agnostic  
 
 ---
@@ -10,7 +10,7 @@
 
 OpenUDA defines canonical document structures for business document exchange.
 
-The purpose of these design principles is to ensure that all OpenUDA Universal Document Types (UDTs) are:
+The purpose of these design principles is to ensure that all OpenUDA Universal Document Types (UDs) are:
 
 - predictable
 - interoperable
@@ -18,7 +18,7 @@ The purpose of these design principles is to ensure that all OpenUDA Universal D
 - extensible
 - implementation-friendly
 
-These principles guide the design of all current and future UDTs.
+These principles guide the design of all current and future UDs.
 
 ---
 
@@ -37,7 +37,7 @@ Normative statements define requirements that implementations are expected to fo
 
 Examples:
 
-- A UDT **MUST** define its validation rules.
+- A UD **MUST** define its validation rules.
 - Extensions **MUST NOT** redefine core fields.
 
 ### Informative Statements
@@ -51,7 +51,7 @@ Examples include:
 - illustrative JSON examples
 
 ---
-  
+
 ## 3. Core Design Goal
 
 OpenUDA is designed to reduce integration entropy.
@@ -70,7 +70,7 @@ OpenUDA aims to provide a simpler canonical model that preserves business meanin
 
 ## 4. Common Canonical Backbone
 
-All OpenUDA UDTs SHOULD follow a common structural backbone wherever applicable.
+All OpenUDA UDs SHOULD follow a common structural backbone wherever applicable.
 
 The canonical backbone is:
 
@@ -90,7 +90,7 @@ Optional companion sections MAY include:
 
 This common backbone is intended to make OpenUDA documents feel structurally familiar across document types.
 
-**Design objective:** once an implementer understands one UDT, they should be able to understand other UDTs with minimal relearning.
+**Design objective:** once an implementer understands one UD, they should be able to understand other UDs with minimal relearning.
 
 ---
 
@@ -99,7 +99,7 @@ This common backbone is intended to make OpenUDA documents feel structurally fam
 OpenUDA separates document content into three layers:
 
 ### 5.1 Core
-Core fields are the fields defined directly in a UDT specification.
+Core fields are the fields defined directly in a UD specification.
 
 Core fields:
 
@@ -109,7 +109,7 @@ Core fields:
 - MUST NOT be overridden by extensions or custom data
 
 ### 5.2 Extensions
-Extensions are standardized optional fields defined outside the core UDT to support:
+Extensions are standardized optional fields defined outside the core UD to support:
 
 - country-specific requirements
 - industry-specific requirements
@@ -124,7 +124,31 @@ Custom fields allow adoption without waiting for OpenUDA governance to standardi
 
 ---
 
-## 6. Core Fields Must Be Minimal and Universal
+## 6. Core Enforcement Principle
+
+The core of an OpenUDA UD is the fixed canonical structure and semantic model defined by the base UD specification.
+
+The UD core MUST be enforced consistently across all implementations.
+
+This means:
+
+- core sections MUST NOT be removed, renamed, or restructured
+- core fields MUST retain the same semantic meaning in all profiles and implementations
+- fields defined as SHALL in the core UD MUST remain required for conformance
+- profiles, extensions, and custom data MUST NOT weaken, override, or bypass core requirements
+- profiles MAY add stricter requirements to optional fields, but MUST NOT alter core semantics
+
+Variation in OpenUDA is permitted only through:
+
+- extension fields
+- custom fields
+- profile-level constraints applied on top of the fixed core
+
+OpenUDA implementations MUST treat the base UD as the authoritative canonical model.
+
+---
+
+## 7. Core Fields Must Be Minimal and Universal
 
 A field SHOULD be added to the core only when it is:
 
@@ -146,7 +170,7 @@ Examples of core-style fields include:
 
 ---
 
-## 7. Canonical Semantics Over Storage Model
+## 8. Canonical Semantics Over Storage Model
 
 OpenUDA models business meaning, not internal database design.
 
@@ -159,9 +183,9 @@ Examples:
 
 ---
 
-## 8. Structural Consistency Across UDTs
+## 9. Structural Consistency Across UDs
 
-New UDTs SHOULD reuse the same top-level structural grammar whenever possible.
+New UDs SHOULD reuse the same top-level structural grammar whenever possible.
 
 For example:
 
@@ -185,11 +209,12 @@ Preferred pattern:
   "specializedSection": {}
 }
 ```
-Avoid patterns where every new UDT introduces an entirely different structural shape.
+
+Avoid patterns where every new UD introduces an entirely different structural shape.
 
 ---
 
-## 9. Derived Values
+## 10. Derived Values
 
 Derived values SHOULD be defined clearly.
 
@@ -197,44 +222,43 @@ Where useful for interoperability, derived values MAY be transmitted explicitly,
 
 Examples:
 
-- `lineAmount = quantity × unitPrice`
-- `grandTotal = subtotal + discountTotal + taxTotal + shippingTotal + roundingAdjustment`
+- lineAmount = quantity × unitPrice
+- grandTotal = subtotal + discountTotal + taxTotal + shippingTotal + roundingAdjustment
 
-Derived values MUST NOT conflict with their declared formulas beyond the tolerance defined by the relevant UDT.
+Derived values MUST NOT conflict with their declared formulas beyond the tolerance defined by the relevant UD.
 
 ---
 
-## 10. Extensions
+## 11. Extensions
 
 Extensions allow OpenUDA to support broader use cases without bloating the core.
 
-### 10.1 Extension Rules
-
+### 11.1 Extension Rules
 Extensions:
 
 - MUST be namespaced
 - MUST NOT redefine a core field
 - MUST NOT change the meaning of a core field
 - MUST NOT invalidate core validation rules
+- MUST NOT duplicate or simulate a core field under a different name
+- MUST NOT be used to simulate an alternative core structure
 - SHOULD remain optional unless a specific extension profile states otherwise
 
-### 10.2 Extension Namespaces
-
+### 11.2 Extension Namespaces
 Recommended namespace patterns include:
 
-- `openuda:country.<ISO2>`
-- `openuda:industry.<name>`
-- `openuda:community.<name>`
+- openuda:country.<ISO2>
+- openuda:industry.<name>
+- openuda:community.<name>
 
 Examples:
 
-- `openuda:country.ca`
-- `openuda:country.us`
-- `openuda:industry.it`
-- `openuda:industry.healthcare`
+- openuda:country.ca
+- openuda:country.us
+- openuda:industry.it
+- openuda:industry.healthcare
 
-### 10.3 Extension Placement
-
+### 11.3 Extension Placement
 Extensions MAY appear at multiple levels of a document, including:
 
 - header
@@ -244,17 +268,15 @@ Extensions MAY appear at multiple levels of a document, including:
 
 Examples:
 
-- `header.extensions`
-- `lines[].extensions`
-- `parties.seller.extensions`
+- header.extensions
+- lines[].extensions
+- parties.seller.extensions
 
-### 10.4 Extension Shape
-
+### 11.4 Extension Shape
 Extensions SHOULD be represented as namespaced objects rather than flat key-value arrays.
 
 Preferred pattern:
 
-```json
 {
   "extensions": {
     "openuda:industry.it": {
@@ -263,14 +285,13 @@ Preferred pattern:
     }
   }
 }
-```
+
 This pattern improves readability, validation, and future machine processing.
 
-### 10.5 Extension Optionality Principle
-
+### 11.5 Extension Optionality Principle
 Extensions SHOULD remain optional wherever possible.
 
-Extensions MUST NOT introduce mandatory fields that prevent a document from being processed using only the core UDT structure unless the requirement is defined by an explicitly published extension profile.
+Extensions MUST NOT introduce mandatory fields that prevent a document from being processed using only the core UD structure unless the requirement is defined by an explicitly published extension profile.
 
 An extension profile MAY define additional required fields for a specific ecosystem, such as:
 
@@ -278,64 +299,52 @@ An extension profile MAY define additional required fields for a specific ecosys
 - an industry interoperability profile
 - a bilateral trading agreement
 
-However, such requirements MUST be declared within the extension profile itself and MUST NOT alter the conformance requirements of the base UDT specification.
+However, such requirements MUST be declared within the extension profile itself and MUST NOT alter the conformance requirements of the base UD specification.
 
-Implementations that do not support a given extension profile SHOULD still be able to process the core UDT document.
+Implementations that do not support a given extension profile SHOULD still be able to process the core UD document.
 
 This rule preserves interoperability across OpenUDA implementations while allowing ecosystems to evolve specialized requirements.
 
 ---
 
-### 11. Custom Data
+## 12. Custom Data
 
 Custom data supports organization-specific needs that are not yet part of OpenUDA core or extension standards.
 
-### 11.1 Custom Rules
-
+### 12.1 Custom Rules
 Custom data:
 
-MUST be namespaced using the organization identifier
+- MUST be namespaced using the organization identifier
+- MUST NOT redefine or duplicate core fields
+- MUST NOT substitute for a core field
+- SHOULD be optional for receivers
+- MAY later be promoted into an extension or core field through governance
 
-MUST NOT redefine or duplicate core fields
-
-SHOULD be optional for receivers
-
-MAY later be promoted into an extension or core field through governance
-
-### 11.2 Custom Namespaces
-
+### 12.2 Custom Namespaces
 Recommended pattern:
 
 org:<orgId>
 
 Examples:
 
-org:cisco
+- org:cisco
+- org:acme
+- org:globex
 
-org:acme
-
-org:globex
-
-### 11.3 Custom Placement
-
+### 12.3 Custom Placement
 Custom fields MAY appear at multiple levels, including:
 
-header
-
-lines
-
-parties
-
-attachments
+- header
+- lines
+- parties
+- attachments
 
 Examples:
 
-header.custom
+- header.custom
+- lines[].custom
 
-lines[].custom
-
-### 11.4 Custom Shape
-
+### 12.4 Custom Shape
 Preferred pattern:
 
 {
@@ -347,150 +356,123 @@ Preferred pattern:
   }
 }
 
-
 ---
 
-### 12. Extension and Custom Data Must Be Ignorable
+## 13. Extension and Custom Data Must Be Ignorable
 
 A receiver that does not recognize an extension or custom field SHOULD still be able to process the document using only the core fields.
 
 This principle is essential for:
 
-forward compatibility
-
-interoperability
-
-low-friction partner onboarding
+- forward compatibility
+- interoperability
+- low-friction partner onboarding
 
 Unrecognized extension or custom content SHOULD NOT break core processing unless a specific bilateral agreement requires it.
 
 ---
 
-### 13. Promotion Path
+## 14. Promotion Path
 
 OpenUDA supports a natural field maturity path:
 
-Custom → Extension → Core
+**Custom → Extension → Core**
 
 This allows the standard to evolve gradually.
 
 A field may begin as:
 
-a company-specific custom field
-
-then become a recognized industry or country extension
-
-then eventually become part of the core if it proves broadly universal
-
+- a company-specific custom field
+- then become a recognized industry or country extension
+- then eventually become part of the core if it proves broadly universal
+  
 Promotion SHOULD occur through documented review and versioning processes.
 
 ---
 
-### 14. Low-Entropy Taxonomy
+## 15. Low-Entropy Taxonomy
 
 OpenUDA SHOULD avoid unnecessary document proliferation.
 
-Separate UDTs SHOULD be introduced only when the business semantics or required structures are materially different.
+Separate UDs SHOULD be introduced only when the business semantics or required structures are materially different.
 
-Examples of reasons to introduce a separate UDT may include:
+Examples of reasons to introduce a separate UD may include:
 
-materially different validation rules
+- materially different validation rules
+- materially different required business objects
+- materially different workflow semantics
 
-materially different required business objects
-
-materially different workflow semantics
-
-Differences in internal ERP storage alone SHOULD NOT force creation of a separate UDT.
+Differences in internal ERP storage alone SHOULD NOT force creation of a separate UD.
 
 ---
 
-### 15. Versioning Principles
+## 16. Versioning Principles
 
 OpenUDA follows major/minor versioning.
 
-### 15.1 Minor Versions
-
+### 16.1 Minor Versions
 Minor versions:
 
-MAY add optional fields
+- MAY add optional fields
+- MAY clarify definitions
+- SHOULD preserve backward compatibility
+- MUST NOT change the meaning of existing fields
 
-MAY clarify definitions
-
-SHOULD preserve backward compatibility
-
-MUST NOT change the meaning of existing fields
-
-### 15.2 Major Versions
-
+### 16.2 Major Versions
 Major versions:
 
-MAY introduce structural changes
-
-MAY remove or replace deprecated constructs
-
-MUST include migration guidance where practical
+- MAY introduce structural changes
+- MAY remove or replace deprecated constructs
+- MUST include migration guidance where practical
 
 ---
 
-### 16. Validation Principles
+## 17. Validation Principles
 
-Each UDT SHOULD define explicit validation rules.
+Each UD SHOULD define explicit validation rules.
 
 Validation rules SHOULD cover:
 
-required field presence
-
-type constraints
-
-derived value formulas
-
-currency consistency
-
-cross-section consistency where needed
+- required field presence
+- type constraints
+- derived value formulas
+- currency consistency
+- cross-section consistency where needed
 
 Validation SHOULD be deterministic and implementation-friendly.
 
 ---
 
-### 17. Human Readability and Machine Usability
+## 18. Human Readability and Machine Usability
 
 OpenUDA specifications SHOULD be understandable by:
 
-integration architects
-
-developers
-
-business analysts
-
-implementation leads
+- integration architects
+- developers
+- business analysts
+- implementation leads
 
 Specifications SHOULD balance:
 
-semantic clarity
-
-machine processability
-
-implementation practicality
+- semantic clarity
+- machine processability
+- implementation practicality
 
 OpenUDA should avoid unnecessary abstraction when a simpler expression preserves the same meaning.
 
 ---
 
-### 18. JSON Shape Guidance
+## 19. JSON Shape Guidance
 
 Although OpenUDA is encoding-agnostic, JSON examples SHOULD follow a consistent style.
 
 Recommended practices:
 
-lowerCamelCase field names
-
-arrays for repeating business objects
-
-objects for structured concepts
-
-namespaced objects for extensions and custom data
-
-explicit money objects for monetary values
+- lowerCamelCase field names
+- arrays for repeating business objects
+- objects for structured concepts
+- namespaced objects for extensions and custom data
+- explicit money objects for monetary values
 
 Example:
 
@@ -512,26 +494,24 @@ Example:
 
 ---
 
-### 19. Governance and Future Evolution
+## 20. Governance and Future Evolution
 
 These principles are intended to prevent schema drift and preserve coherence across the OpenUDA ecosystem.
 
 They provide a foundation for:
 
-new UDT design
-
-extension design
-
-custom field handling
-
-future governance processes
+- new UD design
+- extension design
+- custom field handling
+- future governance processes
 
 All future OpenUDA specifications SHOULD align with these principles unless a documented exception is explicitly justified.
 
-
 ---
 
-### 20. Change Log
-| Version | Date | Notes |
+## 21. Change Log
+
+| Version	| Date	| Notes |
 |--------|------|------|
 | 1.0 | 2026-03-07 | Initial draft |
+| 1.1	| 2026-03-20	| Added Core Enforcement Principle and strengthened extension/custom safeguards |
