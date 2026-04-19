@@ -322,9 +322,7 @@ In addition to the base UD validation rules, this profile defines the following 
 
 A document that fails the base UD conformance rules cannot claim profile conformance.
 
----
-
-## Tax Handling
+## 10.4 Tax Handling
 
 Tax structure and validation are defined in the base UD and applicable country profiles.
 
