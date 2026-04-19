@@ -234,19 +234,22 @@ For documents conforming to UD-PO under this profile, the following fields are R
 
 For documents conforming to UD-SHP under this profile, the following fields are REQUIRED in addition to the base UD-SHP requirements.
 
-Header
-Field	Requirement
-header.issueDate	REQUIRED
-Lines
-Field	Requirement
-lines[].description	REQUIRED
-lines[].quantity	REQUIRED
-lines[].manufacturerPartNumber	REQUIRED
-lines[].shipDate	REQUIRED
-lines[].orderReference.orderId	REQUIRED when shipment fulfills an order
-Conditional
-serial numbers are REQUIRED for serialized hardware when available to the sender
-tracking references SHOULD be present when shipment is carrier-based
+### Header
+| Field | Requirement |
+|---|---|
+| header.issueDate |	REQUIRED |
+### Lines
+| Field | Requirement |
+|---|---|
+| lines[].description	| REQUIRED |
+| lines[].quantity	| REQUIRED |
+| lines[].manufacturerPartNumber	| REQUIRED |
+| lines[].shipDate	| REQUIRED |
+| lines[].orderReference.orderId	| REQUIRED when shipment fulfills an order |
+
+### Conditional
+- serial numbers are REQUIRED for serialized hardware when available to the sender
+- tracking references SHOULD be present when shipment is carrier-based
 
 ---
 
@@ -254,12 +257,12 @@ tracking references SHOULD be present when shipment is carrier-based
 
 This profile defines the following standardized extension namespace:
 
-openuda:industry.it-distribution
+`openuda:industry.it-distribution`
 
 Extensions under this profile MAY appear at:
 
-header.extensions
-lines[].extensions
+- header.extensions
+- lines[].extensions
 
 ---
 
@@ -267,10 +270,11 @@ lines[].extensions
 
 The following extension fields are defined at header level.
 
-Field	Type	Requirement	Description
-dealRegistrationId	String	OPTIONAL	Channel deal registration identifier
-contractNumber	String	OPTIONAL	Vendor or channel contract number
-pricingProgramId	String	OPTIONAL	Identifier for pricing program, rebate program, or special pricing arrangement
+| Field | Type | Requirement |	Description |
+|---|---|---|---|
+| dealRegistrationId	| String	| OPTIONAL	| Channel deal registration identifier |
+| contractNumber	| String	| OPTIONAL	| Vendor or channel contract number |
+| pricingProgramId	| String	| OPTIONAL	| Identifier for pricing program, rebate program, or special pricing arrangement |
 
 ---
 
@@ -278,11 +282,12 @@ pricingProgramId	String	OPTIONAL	Identifier for pricing program, rebate program,
 
 The following extension fields are defined at line level.
 
-Field	Type	Requirement	Description
-vendorProgramLineId	String	OPTIONAL	Program-specific line identifier
-distributorSku	String	OPTIONAL	Distributor-specific SKU when distinct from base SKU
-rebateReference	String	OPTIONAL	Rebate, MDF, or pricing claim reference
-warrantyReference	String	OPTIONAL	Warranty-related reference when applicable
+| Field | Type | Requirement |	Description |
+|---|---|---|---|
+| vendorProgramLineId	| String	| OPTIONAL	| Program-specific line identifier |
+| distributorSku	| String	| OPTIONAL	| Distributor-specific SKU when distinct from base SKU |
+| rebateReference	| String	| OPTIONAL	| Rebate, MDF, or pricing claim reference |
+| warrantyReference	| String	| OPTIONAL	| Warranty-related reference when applicable |
 
 ---
 
@@ -343,13 +348,15 @@ This profile does not introduce additional tax rules.
 
 Organizations MAY still use custom fields under:
 
+```json
 org:<orgId>
+```
 
 However:
 
-custom fields MUST NOT replace required profile fields
-custom fields MUST NOT duplicate profile-defined extension fields
-custom fields SHOULD be limited to organization-specific edge requirements
+- custom fields MUST NOT replace required profile fields
+- custom fields MUST NOT duplicate profile-defined extension fields
+- custom fields SHOULD be limited to organization-specific edge requirements
 
 Fields that become common across multiple organizations SHOULD be proposed for future profile standardization.
 
@@ -361,16 +368,16 @@ This profile is intended to reduce partner-by-partner variation within the IT di
 
 Its purpose is to move implementations from:
 
-bespoke partner onboarding
-ad hoc mapping agreements
-undocumented field expectations
+- bespoke partner onboarding
+- ad hoc mapping agreements
+- undocumented field expectations
 
 toward:
 
-shared field requirements
-repeatable validation
-reusable mapping templates
-predictable partner conformance
+- shared field requirements
+- repeatable validation
+- reusable mapping templates
+- predictable partner conformance
 
 ---
 
@@ -378,7 +385,9 @@ predictable partner conformance
 
 This profile SHOULD be stored at:
 
+```json
 extensions/industry-it-distribution.md
+```
 
 ---
 
