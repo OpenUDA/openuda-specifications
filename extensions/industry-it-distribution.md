@@ -207,8 +207,6 @@ For documents conforming to **UD-CM** under this profile:
 - `lines[].rmaNumber` is REQUIRED when reasonCode indicates return
 - serial numbers are REQUIRED when applicable
 
----
-
 ## 7.3 UD-PO
 
 For documents conforming to UD-PO under this profile, the following fields are REQUIRED in addition to the base UD-PO requirements.
@@ -227,8 +225,6 @@ For documents conforming to UD-PO under this profile, the following fields are R
 | lines[].manufacturerPartNumber	| REQUIRED |
 | lines[].unitOfMeasure	| REQUIRED |
 | lines[].orderReference.orderLineId	| REQUIRED when line-level order numbering is used by sender |
-
----
 
 ## 7.4 UD-SHP
 
@@ -264,8 +260,6 @@ Extensions under this profile MAY appear at:
 - header.extensions
 - lines[].extensions
 
----
-
 ## 8.1 Header Extensions
 
 The following extension fields are defined at header level.
@@ -275,8 +269,6 @@ The following extension fields are defined at header level.
 | dealRegistrationId	| String	| OPTIONAL	| Channel deal registration identifier |
 | contractNumber	| String	| OPTIONAL	| Vendor or channel contract number |
 | pricingProgramId	| String	| OPTIONAL	| Identifier for pricing program, rebate program, or special pricing arrangement |
-
----
 
 ## 8.2 Line Extensions
 
@@ -297,16 +289,12 @@ The following extension fields are defined at line level.
 
 If a line represents serialized hardware and serial numbers are available, `lines[].serialNumbers[]` MUST be populated.
 
----
-
 ## 9.2 Order-Based Transactions
 
 If the document originates from an order flow:
 
 - `lines[].orderReference.orderId` MUST be populated
 - `lines[].orderReference.orderLineId` SHOULD be populated when line matching is required
-
----
 
 ## 9.3 Credit Memo Returns
 
@@ -392,5 +380,6 @@ extensions/industry-it-distribution.md
 ---
 
 # 14. Change Log
-Version	Date	Notes
-1.0	2026-03-20	Initial draft
+| Version	| Date	| Notes |
+|---|---|---|
+| 1.0	| 2026-03-20	|Initial draft |
