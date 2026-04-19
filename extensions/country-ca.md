@@ -119,14 +119,15 @@ Each tax MUST be represented independently.
 
 ## 6.3 Required Tax Fields
 
-For each taxDetail entry:
+For each ```taxDetail``` entry:
 
-- Field	Requirement
-- taxType	REQUIRED
-- jurisdiction	REQUIRED
-- taxAmount	REQUIRED
-- taxableAmount	REQUIRED when taxAmount ≠ 0
-- rate	REQUIRED when available
+| Field	| Requirement |
+|---|---|
+| taxType	| REQUIRED |
+| jurisdiction	| REQUIRED |
+| taxAmount	| REQUIRED |
+| taxableAmount	| REQUIRED when taxAmount ≠ 0 |
+| rate	| REQUIRED when available |
 
 ---
 
@@ -134,11 +135,12 @@ For each taxDetail entry:
 
 The following taxType values SHOULD be used:
 
-- Tax Type	Description
-- GST	Federal Goods and Services Tax
-- HST	Harmonized Sales Tax
-- PST	Provincial Sales Tax
-- QST	Quebec Sales Tax
+| Tax Type	| Description |
+|---|---|
+| GST	| Federal Goods and Services Tax |
+| HST	| Harmonized Sales Tax |
+| PST	| Provincial Sales Tax |
+| QST	| Quebec Sales Tax |
 
 Other values MAY be used if required by the sender’s tax system.
 
@@ -150,18 +152,19 @@ Other values MAY be used if required by the sender’s tax system.
 
 Jurisdiction MUST be represented as:
 
+```
 {
   "scheme": "erp:<system>",
   "value": "<jurisdiction_code>"
 }
-
+```
 Example:
-
+```
 {
   "scheme": "erp:sap",
   "value": "CA-ON-HST"
 }
-
+```
 ## 8.2 Authority
 
 OpenUDA does NOT define jurisdiction code systems.
@@ -179,8 +182,9 @@ Jurisdiction values MUST originate from:
 ## 9.1 Tax Source of Truth
 
 Tax MUST be derived from line-level tax detail.
-
+```
 totals.taxTotal = sum(all lines[].taxDetail[].taxAmount)
+```
 
 ## 9.2 Currency Consistency
 
@@ -238,9 +242,9 @@ Credit memos SHOULD reference the original invoice when tax is being reversed.
 ## 12.1 Ship-To Importance
 
 Tax determination SHOULD be based on:
-
+```
 parties.shipTo.address
-
+```
 This is critical for:
 
 - HST vs GST/PST determination
@@ -272,7 +276,7 @@ This profile does not enforce a single tax engine or jurisdiction system.
 
 This profile MAY be used alongside:
 
-openuda:profile.industry.it-distribution
+```openuda:profile.industry.it-distribution```
 
 When combined:
 
@@ -286,16 +290,17 @@ Both profiles MUST be satisfied.
 # 15. Relationship to Custom Fields
 
 Organizations MAY include custom tax-related fields using:
-
+```
 org:<orgId>
-
+```
 However:
 
-custom fields MUST NOT replace core tax structure
-custom fields MUST NOT conflict with this profile
+- custom fields MUST NOT replace core tax structure
+- custom fields MUST NOT conflict with this profile
 
 ---
 
 # 16. Change Log
-Version	Date	Notes
-1.0	2026-03-20	Initial draft
+| Version	| Date	| Notes |
+|---|---|---|
+| 1.0	| 2026-03-20	| Initial draft |
