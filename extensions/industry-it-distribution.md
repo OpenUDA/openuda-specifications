@@ -334,7 +334,7 @@ This profile does not introduce additional tax rules.
 
 Organizations MAY still use custom fields under:
 
-```json
+```
 org:<orgId>
 ```
 
@@ -371,7 +371,7 @@ toward:
 
 This profile SHOULD be stored at:
 
-```json
+```
 extensions/industry-it-distribution.md
 ```
 
